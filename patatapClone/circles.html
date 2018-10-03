@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Circles</title>
+	<script type="text/javascript" src="paper-full.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.14/howler.js"></script>
+	<link rel="stylesheet" type="text/css" href="circles.css">
+	<script type="text/paperscript" canvas="myCanvas">
+
+
+
+		function randomColors(){
+			var randomLetters= '0123456789ABCDEF';
+			var color='#';
+			for (var i = 0; i < 6; i++) {
+				color += randomLetters[Math.floor(Math.random() * 16)];
+				}
+			return color;
+			
+		}
+
+
+
+		var figures= [];
+		
+		var keyData = {
+		   	a: {
+		        sound: new Howl({
+		            src: ['sounds/bubbles.mp3']
+		        })
+		    },
+		    b: {
+		        sound: new Howl({
+		            src: ['sounds/clay.mp3']
+		        })
+		    },
+		    c: {
+		        sound: new Howl({
+		            src: ['sounds/confetti.mp3']
+		        })
+		    },
+		    d: {
+		        sound: new Howl({
+		            src: ['sounds/corona.mp3']
+		        })
+		    },
+		    e: {
+		        sound: new Howl({
+		            src: ['sounds/dotted-spiral.mp3']
+		        })
+		    },	
+		    f: {
+		        sound: new Howl({
+		            src: ['sounds/flash-1.mp3']
+		        })
+		    },	   
+		    g: {
+		        sound: new Howl({
+		            src: ['sounds/flash-2.mp3']
+		        })
+		    },
+		    h: {
+		        sound: new Howl({
+		            src: ['sounds/glimmer.mp3']
+		        })
+		    },
+		    i: {
+		        sound: new Howl({
+		            src: ['sounds/flash-3.mp3']
+		        })
+		    },
+		    j: {
+		        sound: new Howl({
+		            src: ['sounds/moon.mp3']
+		        })
+		    },
+		    k: {
+		        sound: new Howl({
+		            src: ['sounds/pinwheel.mp3']
+		        })
+		    },
+		    l: {
+		        sound: new Howl({
+		            src: ['sounds/piston-1.mp3']
+		        })
+		    },
+		    m: {
+		        sound: new Howl({
+		            src: ['sounds/piston-2.mp3']
+		        })
+		    },
+		    n: {
+		        sound: new Howl({
+		            src: ['sounds/piston-3.mp3']
+		        })
+		    },
+		    o: {
+		        sound: new Howl({
+		            src: ['sounds/prism-1.mp3']
+		        })
+		    },
+		    p: {
+		        sound: new Howl({
+		            src: ['sounds/prism-2.mp3']
+		        })
+		    },
+		    z: {
+		        sound: new Howl({
+		            src: ['sounds/prism-3.mp3']
+		        })
+		    },
+		    q: {
+		        sound: new Howl({
+		            src: ['sounds/splits.mp3']
+		        })
+		    },	
+		    r: {
+		        sound: new Howl({
+		            src: ['sounds/squiggle.mp3']
+		        })
+		    },	
+		    s: {
+		        sound: new Howl({
+		            src: ['sounds/strike.mp3']
+		        })
+		    },		  
+		    t: {
+		        sound: new Howl({
+		            src: ['sounds/suspension.mp3']
+		        })
+		    },	    	
+		    u: {
+		        sound: new Howl({
+		            src: ['sounds/timer.mp3']
+		        })
+		    }, 
+		    v: {
+		        sound: new Howl({
+		            src: ['sounds/ufo.mp3']
+		        })
+		    },   
+		    w: {
+		        sound: new Howl({
+		            src: ['sounds/veil.mp3']
+		        })
+		    },
+		    x: {
+		        sound: new Howl({
+		            src: ['sounds/wipe.mp3']
+		        })
+		    },	
+		    y: {
+		        sound: new Howl({
+		            src: ['sounds/zig-zag.mp3']
+		        })
+		    },	    
+};
+		
+		function makeFigures(option){
+		var maxPoint=new Point(view.size.width, view.size.height);
+		var randomPoint=Point.random();
+		var point = maxPoint*randomPoint;
+			if(option===1){
+				var newCircle= new Path.Circle(point,500);
+				newCircle.fillColor=randomColors();
+				figures.push(newCircle);
+			} else if(option===2){
+				var newRectangle = new Rectangle(point, new Point(100,500));
+				var path=new Path.Rectangle(newRectangle);
+				path.fillColor=randomColors();
+				figures.push(path);
+			}	else if(option===2){
+				var newRectangle = new Rectangle(point, new Point(100,500));
+				var path=new Path.Rectangle(newRectangle);
+				path.fillColor=randomColors();
+				figures.push(path);
+			}	else if(option===3){
+				var triangle = new Path.RegularPolygon(point,3,500);
+				triangle.fillColor=randomColors()
+				figures.push(triangle);
+			}else if(option===4){
+				var pentagon = new Path.RegularPolygon(point,5,500);
+				pentagon.fillColor=randomColors();
+				figures.push(pentagon);
+				}
+			 }
+
+		function onKeyDown(event){
+			var options=Math.floor((Math.random()*4)+1);
+			keyData[event.key].sound.play();
+			makeFigures(options);
+
+		  }
+
+
+		function onFrame(e){
+			for (var i = 0; i < figures.length; i++) {
+				figures[i].fillColor.hue += 1;
+				figures[i].scale(.9);
+			}
+		}
+
+
+	</script>
+</head>
+<body>
+	<canvas id="myCanvas" resize></canvas>
+
+</body>
+</html>
